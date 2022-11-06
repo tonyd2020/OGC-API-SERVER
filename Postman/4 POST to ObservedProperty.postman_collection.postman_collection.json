@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "39f5c8cd-824a-4d6e-bb97-c4688537f0c4",
+		"name": "4 POST to ObservedProperty.postman_collection",
+		"description": "# Introduction\nThis is a description of the IoT Layer process that is used to translate the data from the PairTree Data model to the OGC/STA data model.\n\n\n# Overview\nThe conversion process is as follows:\n(IoT Layer command to AWS API GW) => (AWS Lambda request) => (FROST-Server responds).\n\nThe 'ObservedProperty' object is normally used to described the condition or characteristics of a 'Thing' or its environment but there are no direct equivalent in the PairTree data model so the nearest approximates are used instead.\n\n# Authentication\n**IoT Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'admin' level access).\n\n**Service Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'read' level access).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Original PairTree Data received by the AWS API Gateway",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"OemDevice-Table-Schema\": {\r\n        \"name\": \"Temperature Sensor\",\r\n        \"id\": 1,\r\n        \"num_sensors\": 1\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{API_Gateway}}/ObservedProperties",
+					"host": [
+						"{{API_Gateway}}"
+					],
+					"path": [
+						"ObservedProperties"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Original PairTree Data received by the AWS API Gateway",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"OemDevice-Table-Schema\": {\r\n    \"name\": \"Temperature Sensor\",\r\n    \"id\": 1,\r\n    \"num_sensors\": 1\r\n  }     \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_Gateway}}/ObservedProperties",
+							"host": [
+								"{{API_Gateway}}"
+							],
+							"path": [
+								"ObservedProperties"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Transformed Data received by the FROST Server",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Soil Moisture\",\r\n    \"properties\": {\r\n        \"OemDevice-Table-Schema\": {\r\n            \"name\": \"Moisture Sensor\",\r\n            \"id\": 1,\r\n            \"num_sensors\": 1\r\n        }\r\n    },\r\n    \"description\": \"Soil Moisture\",\r\n    \"definition\": \"Soil Moisture\"\r\n}"
+				},
+				"url": {
+					"raw": "{{FROST_url}}/ObservedProperties",
+					"host": [
+						"{{FROST_url}}"
+					],
+					"path": [
+						"ObservedProperties"
+					]
+				},
+				"description": "# Request Payload description\nThe JSON object that is sent to the 'ObservedProperty' record consists of the following fields:\n\n|   Field       |                            Data source                      |\n| ------------- | ----------------------------------------------------------- |\n| name          | Use the \"name\" field of the OemSensor-Table-Schema          |\n| description   | Use the \"comments\" field of the Device-Table-Schema         |\n| properties    | Optional (Leave empty)                                      |\n\n# Error Codes\n| Response Code |                  Cause                  |\n| ------------- | --------------------------------------- |\n|     200       | Request was processed successfully      | \n|     401       | Unauthorized. Token was rejected        |\n|     400       | Bad Request. Incorrect JSON data sent   |\n\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n**NOTE:** Also included with the response is the ID of the newly created entity in the 'ObservedProperty' table. To maintain data integrity, it is important that this ID number  is appended to the URL during subsequent Posting of dependent entities such as SENSOR and SAMPLE data that are associated with the DEVICE.\n\n# Error Codes\n| Response Code |                  Cause                  |\n| ------------- | --------------------------------------- |\n|     200       | Request was processed successfully      | \n|     401       | Unauthorized. Token was rejected        |\n|     400       | Bad Request. Incorrect JSON data sent   |"
+			},
+			"response": [
+				{
+					"name": "Example of posting to the ObservedProperty table",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"NE corner temp sensor (use OemSensor-Table-Schema.name)\",\r\n  \"description\": \"West side Temperature sensor (use Device-Table-Schema.comments)\",\r\n  \"properties\": {},\r\n  \"definition\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/FROST-Server/v1.1/ObservedProperties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"FROST-Server",
+								"v1.1",
+								"ObservedProperties"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "Location"
+						},
+						{
+							"key": "location",
+							"value": "http://localhost:8080/FROST-Server/v1.1/ObservedProperties(2)"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Jul 2021 01:40:36 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=20"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "GET a list of Observed Properties",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "456456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/ObservedProperties",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"ObservedProperties"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET a list of Observed Properties",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 456456",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_Gateway_GET}}/ObservedProperties",
+							"host": [
+								"{{API_Gateway_GET}}"
+							],
+							"path": [
+								"ObservedProperties"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GET an Observed Property",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "456456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/ObservedProperties(2)",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"ObservedProperties(2)"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

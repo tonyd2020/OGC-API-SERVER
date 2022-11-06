@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<div class="container">
+    {% include "navbar.html" %}
+</div>
+<div class="container">
+    <div class="row table-title" style="padding-bottom: 20px; margin:auto;">
+        <h1 style="margin:auto;">Table of 'Datastreams' </h1>
+    </div>
+    <div class="row">
+        {% if data: %}
+        <table class="table-striped">
+            <thead>
+            <tr>
+                {% for key,value in data[0].items() %}
+                {% if key.title() == 'Properties' %}
+                    <th style="width: 17%;">{{key.title()}}</th>
+                {% else %}
+                <th style="width: 19%;">{{key.title()}}</th>
+                {% endif %}
+                {% endfor %}
+                <th style="width: 19%;">Observations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in data%}
+            <tr>
+                {% for key,value in row.items() %}
+                <td style="width: 19%;">{{value}}</td>
+                {% endfor %}
+                {% for key,value in row.items() %}
+                {% if key.title() == '@Iot.Id' %}
+                    <td style="width: 19%;"><a href="{{url_for('get_Observations', id=value)}}">Observations</a></td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+
+    {% include "plugins.html" %}
+</body>
+</html>

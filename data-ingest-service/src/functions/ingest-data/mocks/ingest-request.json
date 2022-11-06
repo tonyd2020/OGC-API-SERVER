@@ -1,0 +1,47 @@
+{
+  "Sample-Table-Schema": {
+    "id": 1,
+    "metric": "Indoor Temperature",
+    "height": 45.04,
+    "longitude": -100.456,
+    "latitude": 123.345,
+    "time": "2021-05-06T14:54:11.311730",
+    "value": 283.56
+  },
+  "Device-Table-Schema": {
+    "active": "True",
+    "id": 1,
+    "device_eui": "aaaa.bbbb.cccc.1234",
+    "decomm": "None",
+    "location_name": "Greenhouse",
+    "installed": "2021-05-06T14:54:11.282857",
+    "longitude": "None",
+    "latitude": "None",
+    "comments": "West side Temperature sensor",
+    "network_eui": "10.1.0.123"
+  },
+  "OemSensor-Table-Schema": {
+    "name": "NE corner temp sensor",
+    "id": 1
+  },
+  "SubSite-Table-Schema": {
+    "name": "West side of Tony's Farm",
+    "id": 1,
+    "todo_geo_fence": 123460
+  },
+  "Site-Table-Schema": {
+    "name": "Tony's Farm",
+    "id": 1,
+    "todo_geo_fence": 123456
+  },
+  "Owner-Table-Schema": {
+    "cmd_id": 1,
+    "name": "Tony",
+    "id": 1
+  },
+  "OemDevice-Table-Schema": {
+    "name": "Jaycar Temperature Sensor",
+    "id": 1,
+    "num_sensors": 1
+  }
+}

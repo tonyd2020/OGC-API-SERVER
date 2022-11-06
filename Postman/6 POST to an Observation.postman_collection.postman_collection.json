@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "0c57d325-56f9-4c73-8163-10c9d5b691a6",
+		"name": "6 POST to an Observation.postman_collection",
+		"description": "# Introduction\nThis is a description of the IoT Layer process that is used to translate the data from the PairTree Data model to the OGC/STA data model.\n\n\n# Overview\nThe conversion process is as follows:\n(IoT Layer command to AWS API GW) => (AWS Lambda request) => (FROST-Server responds)\n\n# Authentication\n**IoT Layer operations:**  Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'admin' level access).\n\n**Service Layer operations:**  Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'read' level access).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Original PairTree Data received by the AWS API Gateway",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Sample-Table-Schema\": {\r\n        \"id\": 1,\r\n        \"metric\": \"Indoor Temperature\",\r\n        \"height\": 45.04,\r\n        \"longitude\": -100.456,\r\n        \"latitude\": 123.345,\r\n        \"time\": \"2021-05-06T14:54:11.311730\",\r\n        \"value\": 283.56\r\n    },\r\n    \"Relations\": {\r\n        \"Datastream\": 11\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{API_Gateway}}/Observations",
+					"host": [
+						"{{API_Gateway}}"
+					],
+					"path": [
+						"Observations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Original PairTree Data received by the AWS API Gateway",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Sample-Table-Schema\": {\r\n    \"id\": 1,\r\n    \"metric\": \"Indoor Temperature\",\r\n    \"height\": 45.04,\r\n    \"longitude\": -100.456,\r\n    \"latitude\": 123.345,\r\n    \"time\": \"2021-05-06T14:54:11.311730\",\r\n    \"value\": 283.56\r\n  },\r\n  \"Datastream\": {\"@iot.id\": 1}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_Gateway}}/Observations",
+							"host": [
+								"{{API_Gateway}}"
+							],
+							"path": [
+								"Observations"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Original PairTree Data received by the AWS API Gateway Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Sample-Table-Schema\": {\r\n        \"id\": 1,\r\n        \"metric\": \"Indoor Temperature\",\r\n        \"height\": 45.04,\r\n        \"longitude\": -100.456,\r\n        \"latitude\": 123.345,\r\n        \"time\": \"2021-05-06T14:54:11.311730\",\r\n        \"value\": 283.56\r\n    },\r\n    \"Relations\": {\r\n        \"Datastream\": 11\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{API_Gateway}}/Observations",
+					"host": [
+						"{{API_Gateway}}"
+					],
+					"path": [
+						"Observations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Original PairTree Data received by the AWS API Gateway",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Sample-Table-Schema\": {\r\n    \"id\": 1,\r\n    \"metric\": \"Indoor Temperature\",\r\n    \"height\": 45.04,\r\n    \"longitude\": -100.456,\r\n    \"latitude\": 123.345,\r\n    \"time\": \"2021-05-06T14:54:11.311730\",\r\n    \"value\": 283.56\r\n  },\r\n  \"Datastream\": {\"@iot.id\": 1}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_Gateway}}/Observations",
+							"host": [
+								"{{API_Gateway}}"
+							],
+							"path": [
+								"Observations"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Transformed Data received by the FROST Server",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"result\" : 283.56,\r\n  \"resultTime\" : \"2021-05-06T14:54:11.311730\",\r\n  \"parameters\" : {\r\n     \"Sample-Table-Schema\": {\r\n        \"id\": 1,\r\n        \"metric\": \"Indoor Temperature\",\r\n        \"height\": 45.04,\r\n        \"longitude\": -100.456,\r\n        \"latitude\": 123.345,\r\n        \"time\": \"2021-05-06T14:54:11.311730\",\r\n        \"value\": 283.56\r\n     }\r\n  },\r\n  \"Datastream\": {\"@iot.id\": 1}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/FROST-Server/v1.1/Observations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FROST-Server",
+						"v1.1",
+						"Observations"
+					]
+				},
+				"description": "# Request description\nThe JSON object that is sent to the 'Locations' record consists of the following fields:\n\n|   Field           |                            Data source                      |\n| ----------------- | ----------------------------------------------------------- |\n| result            | \"Data stream from {OemSensor-Table-Schema.name}\"            |\n| resultTime        | OemSensor-Table-Schema.time                                 |\n| parameters        | Insert the Sample-Table-Schema as a JSON object             |\n| Datastream        | {\"@iot.id\": (ID of the 'Datastream' entity)}                |\n\nEnsure that the values are added to the correct Datastream\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n\n**NOTE:** Also included with the response is the ID of the newly created entity in the 'Datastream' table."
+			},
+			"response": []
+		},
+		{
+			"name": "Transformed Data received by the FROST Server Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"result\": 283.56,\r\n    \"resultTime\": \"2021-05-06T14:54:11.311730\",\r\n    \"parameters\": {\r\n        \"Sample-Table-Schema\": {\r\n            \"id\": 1,\r\n            \"metric\": \"Indoor Temperature\",\r\n            \"height\": 45.04,\r\n            \"longitude\": -100.456,\r\n            \"latitude\": 123.345,\r\n            \"time\": \"2021-05-06T14:54:11.311730\",\r\n            \"value\": 283.56\r\n        }\r\n    },\r\n    \"Datastream\": {\r\n        \"@iot.id\": 1\r\n    }\r\n}\r\n\r\n\r\n    \"requests\": [\r\n    {\r\n        \"id\": \"ObservedProperty1\",\r\n        \"atomicityGroup\": \"group1\",\r\n        \"method\": \"post\",\r\n        \"url\": \"ObservedProperties\",\r\n        \"body\": {\r\n            \"name\": \"Room temp sensor (use OemSensor-Table-Schema.name)\",\r\n            \"description\": \"West side Temperature sensor (use Device-Table-Schema.comments)\",\r\n            \"properties\": {},\r\n            \"definition\": \"\"\r\n        }\r\n    },\r\n    {\r\n        \"id\": datastream1,\r\n        \"atomicityGroup\": \"group1\",\r\n        \"method\": \"post\",\r\n        \"url\": \"Datastreams\",\r\n        \"body\": {\r\n            \"name\": \"Data stream from {OemSensor-Table-Schema.name}\",\r\n            \"description\": \"\",\r\n            \"observationType\": \"\",\r\n            \"unitOfMeasurement\": {\r\n                \"name\": \"Sample-Table-Schema.metric\",\r\n                \"symbol\": \"\",\r\n                \"definition\": \"\"\r\n            },\r\n            \"Thing\": {\r\n                \"@iot.id\": \"$thing1\"\r\n            },\r\n            \"Sensor\": {\r\n                \"@iot.id\": \"$sensor1\"\r\n            },\r\n            \"ObservedProperty\": {\r\n                \"@iot.id\": \"$ObservedProperty1\"\r\n            }\r\n        }\r\n    },\r\n    {\r\n        \"id\": 1,\r\n        \"atomicityGroup\": \"group1\",\r\n        \"method\": \"post\",\r\n        \"url\": \"Datastreams\",\r\n        \"body\": {\r\n            \"result\": 283.56,\r\n            \"resultTime\": \"2021-05-06T14:54:11.311730\",\r\n            \"parameters\": {\r\n                \"Sample-Table-Schema\": {\r\n                    \"id\": 1,\r\n                    \"metric\": \"Indoor Temperature\",\r\n                    \"height\": 45.04,\r\n                    \"longitude\": -100.456,\r\n                    \"latitude\": 123.345,\r\n                    \"time\": \"2021-05-06T14:54:11.311730\",\r\n                    \"value\": 283.56\r\n                }\r\n            }\r\n        },\r\n        \"Datastream\": {\r\n            \"@iot.id\": \"$datastream1\"\r\n        }\r\n    }\r\n]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/FROST-Server/v1.1/Observations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FROST-Server",
+						"v1.1",
+						"Observations"
+					]
+				},
+				"description": "# Request description\nThe JSON object that is sent to the 'Locations' record consists of the following fields:\n\n|   Field           |                            Data source                      |\n| ----------------- | ----------------------------------------------------------- |\n| result            | \"Data stream from {OemSensor-Table-Schema.name}\"            |\n| resultTime        | OemSensor-Table-Schema.time                                 |\n| parameters        | Insert the Sample-Table-Schema as a JSON object             |\n| Datastream        | {\"@iot.id\": (ID of the 'Datastream' entity)}                |\n\nEnsure that the values are added to the correct Datastream\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n\n**NOTE:** Also included with the response is the ID of the newly created entity in the 'Datastream' table."
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of observations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/Observations",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"Observations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of observations Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/Observations",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"Observations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Using Filters",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/v1.0/Things?$filter='@iot.id' gt 110",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"v1.0",
+						"Things"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "'@iot.id' gt 110"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a list of indexes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/v1.1/",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"v1.1",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get a list of indexes",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 456456",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_Gateway_GET}}/v1.1/",
+							"host": [
+								"{{API_Gateway_GET}}"
+							],
+							"path": [
+								"v1.1",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Get a list of indexes",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_Gateway_GET}}/v1.1/",
+							"host": [
+								"{{API_Gateway_GET}}"
+							],
+							"path": [
+								"v1.1",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "568"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 04 Sep 2021 14:29:38 GMT"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "63e93c91-5923-44e8-b73f-4ece9369715f"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "FJFgvGhEywMFcVw="
+						},
+						{
+							"key": "X-Amzn-Trace-Id",
+							"value": "Root=1-613382d1-5d916ab938201c7d506d1619;Sampled=0"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 49ea4f778453ce3674e103017cee54b2.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "SYD4-C1"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "-cwVawvmzeckU1tQK2v6EgB0-FaWmFLwjo91B-EQtDoHHb8g7sBt8w=="
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Success\",\n    \"event\": {\n        \"value\": [\n            {\n                \"name\": \"Datastreams\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/Datastreams\"\n            },\n            {\n                \"name\": \"MultiDatastreams\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/MultiDatastreams\"\n            },\n            {\n                \"name\": \"FeaturesOfInterest\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/FeaturesOfInterest\"\n            },\n            {\n                \"name\": \"HistoricalLocations\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/HistoricalLocations\"\n            },\n            {\n                \"name\": \"Locations\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/Locations\"\n            },\n            {\n                \"name\": \"Observations\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/Observations\"\n            },\n            {\n                \"name\": \"ObservedProperties\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/ObservedProperties\"\n            },\n            {\n                \"name\": \"Sensors\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/Sensors\"\n            },\n            {\n                \"name\": \"Things\",\n                \"url\": \"https://frost-server.anthonydera.com/FROST-Server/v1.1/Things\"\n            }\n        ],\n        \"serverSettings\": {\n            \"conformance\": [\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/batch-request/batch-request\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/create-observations-via-mqtt/observations-creation\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/create-update-delete\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/data-array/data-array\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/datamodel\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/multi-datastream\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/receive-updates-via-mqtt/receive-updates\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/request-data\",\n                \"http://www.opengis.net/spec/iot_sensing/1.1/req/resource-path/resource-path-to-entities\",\n                \"https://fraunhoferiosb.github.io/FROST-Server/extensions/DeepSelect.html\",\n                \"https://fraunhoferiosb.github.io/FROST-Server/extensions/GeoJSON-ResultFormat.html\",\n                \"https://fraunhoferiosb.github.io/FROST-Server/extensions/JsonBatchRequest.html\",\n                \"https://fraunhoferiosb.github.io/FROST-Server/extensions/ResponseMetadata.html\",\n                \"https://fraunhoferiosb.github.io/FROST-Server/extensions/SelectDistinct.html\",\n                \"https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/CSV-ResultFormat/CSV-ResultFormat.md\"\n            ],\n            \"http://www.opengis.net/spec/iot_sensing/1.1/req/create-observations-via-mqtt/observations-creation\": {\n                \"endpoints\": [\n                    \"mqtt://frost-server.anthonydera.com:1883\"\n                ]\n            },\n            \"http://www.opengis.net/spec/iot_sensing/1.1/req/receive-updates-via-mqtt/receive-updates\": {\n                \"endpoints\": [\n                    \"mqtt://frost-server.anthonydera.com:1883\"\n                ]\n            }\n        }\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

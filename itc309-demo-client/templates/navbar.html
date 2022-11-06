@@ -1,0 +1,27 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="row">
+            <h1 class="display-4" style="margin:auto;">ITC309 Team6 Demo</h1>
+        </div>
+        <div class="row">
+            <p class="lead" style="margin:auto; margin-bottom: 2rem;">A Demonstration tool for use with our FROST-Server</p>
+        </div>
+        <div class="row">
+
+        </div>
+        <nav class="navbar sticky-top flex-lg-row navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav justify-content-between w-100">
+                    <li class="nav-item"><a href="{{url_for('get_main')}}">Main</a></li>
+                    <li class="nav-item"><a href="{{url_for('get_Things')}}">Things</a></li>
+                    <li class="nav-item"><a href="{{url_for('get_Locations')}}">Locations</a></li>
+                    <li class="nav-item"><a href="{{url_for('get_Sensors')}}">Sensors</a></li>
+                    <li class="nav-item"><a href="{{url_for('get_ObservedProperties')}}">Observed Properties</a></li>
+                    <li class="nav-item"><a href="{{url_for('get_Datastreams')}}">Datastreams</a></li>
+                    <li class="nav-item"><a href="{{url_for('home')}}">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+

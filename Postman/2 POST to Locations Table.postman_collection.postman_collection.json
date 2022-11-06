@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "3d394668-c888-41e9-999b-1fcf82816e7c",
+		"name": "2 POST to Locations Table.postman_collection",
+		"description": "# Introduction\nThis is a description of the IoT Layer process that is used to translate the data from the PairTree Data model to the OGC/STA data model.\n\n\n# Overview\nThe conversion process is as follows:\n(IoT Layer command to AWS API GW) => (AWS Lambda request) => (FROST-Server responds).\n\nA 'Things' entity in the OGC/STA data model can be associated with one or more location (e.g. North, West, East, or South wall of a greenhouse).\n\n# Authentication\n**IoT Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'admin' level access).\n\n**Service Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'read' level access).\n\n# Payload\nBoth the SITE and SUB_SITE schema tables from the PairTree database are written to the 'LOCATIONS' table of the OGC/STA model.\n\n** Link to 'Things' **\nThe 'Relations' field at the bottom is used to assign a location to a 'Thing' required.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Original PairTree Data received by the AWS API Gateway",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"SubSite-Table-Schema\": {\r\n        \"name\": \"Tony's Home\",\r\n        \"id\": 9,\r\n        \"todo_geo_fence\": 123\r\n    },\r\n    \"Site-Table-Schema\": {\r\n        \"name\": \"Tony's Farm\",\r\n        \"id\": 1,\r\n        \"todo_geo_fence\": 456\r\n    },\r\n    \"Relations\": {\r\n        \"Thing\": 3\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{API_Gateway}}/Locations",
+					"host": [
+						"{{API_Gateway}}"
+					],
+					"path": [
+						"Locations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Original PairTree Data received by the AWS API Gateway",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"SubSite-Table-Schema\": {\r\n    \"name\": \"West side of Tony's Farm\",\r\n    \"id\": 1,\r\n    \"todo_geo_fence\": 123460\r\n  },\r\n  \"Site-Table-Schema\": {\r\n    \"name\": \"Tony's Farm\",\r\n    \"id\": 1,\r\n    \"todo_geo_fence\": 123456\r\n  },  \r\n    \"Things\": [\r\n    { \"@iot.id\": 5}\r\n  ]  \r\n}"
+						},
+						"url": {
+							"raw": "{{API_Gateway}}/Locations",
+							"host": [
+								"{{API_Gateway}}"
+							],
+							"path": [
+								"Locations"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Transformed Data received by the FROST Server",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Name: West side of Tony's Farm (SubSite-Table-Schema)\",\r\n  \"description\": \"todo_geo_fence: 123460\",\r\n  \"properties\": {\r\n     \"Site-Table-Schema\": {\r\n        \"name\": \"Tony's Farm\",\r\n        \"id\": 1,\r\n        \"todo_geo_fence\": 123456\r\n     },\r\n    \"SubSite-Table-Schema\": {\r\n       \"name\": \"West side of Tony's Farm\",\r\n       \"id\": 1,\r\n       \"todo_geo_fence\": \"123460\"\r\n  }\r\n\r\n  },\r\n  \"encodingType\": \"application/geo+json\",\r\n  \"location\": {\r\n    \"type\": \"Point\",\r\n    \"coordinates\": [8.10, 50.00]\r\n  },\r\n  \"Things\": [\r\n    { \"@iot.id\": 5}\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "https://frost-server.anthonydera.com/FROST-Server/v1.1/Locations",
+					"protocol": "https",
+					"host": [
+						"frost-server",
+						"anthonydera",
+						"com"
+					],
+					"path": [
+						"FROST-Server",
+						"v1.1",
+						"Locations"
+					]
+				},
+				"description": "# Request Payload description\nThe JSON object that is sent to the 'Locations' record consists of the following fields:\n\n|   Field       |                            Data source                      |\n| ------------- | ----------------------------------------------------------- |\n| name          | Use the *name* field of the SubSite-Table-Schema            |\n| description   | Use the *todo_geo_fence* field of the SubSite-Table-Schema  |\n| properties    | Insert the SubSite-Table-Schema & Site-Table-Schema objects |\n| encodingType  | *\"application/geo+json\"*                                    |\n| location      | {\"type\": \"Point\", \"coordinates\":  [*long value, lat value*] |\n| Things        | [{ \"@iot.id\": *ID value of the Thing enitity*}]             |\n\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n**NOTE:** Also included with the response is the ID of the newly created entity in the 'Things' table. To maintain data integrity, it is important that this ID number  is appended to the URL during subsequent POSTing of dependent entitities such as SENSOR and SAMPLE data that are associated with the DEVICE.\n\n# Error Codes\n| Response Code |                  Cause                  |\n| ------------- | --------------------------------------- |\n|     200       | Request was processed successfully      | \n|     401       | Unauthorized. Token was rejected        |\n|     400       | Bad Request. Incorrect JSON data sent   |"
+			},
+			"response": []
+		},
+		{
+			"name": "Transformed Data received by the FROST Server Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Haslam's Creek\",\r\n    \"description\": \"Wenthworth Common1\",\r\n    \"encodingType\": \"application/geo+json\",\r\n    \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n            -33.834911274261785,\r\n            151.07551809550486\r\n        ]\r\n    },\r\n    \"properties\": {\r\n        \"SubSite-Table-Schema\": {\r\n            \"name\": \"Haslam's Creek\",\r\n            \"id\": 1,\r\n            \"todo_geo_fence\": [\r\n                -33.834911274261785,\r\n                151.07551809550486\r\n            ]\r\n        },\r\n        \"Site-Table-Schema\": {\r\n            \"name\": \"Wenworth Common\",\r\n            \"id\": 1,\r\n            \"todo_geo_fence\": [\r\n                -33.834911274261785,\r\n                151.07551809550486\r\n            ]\r\n        },\r\n        \"Relations\": {\r\n            \"Thing\": 5\r\n        }\r\n    },\r\n    \"Things\": [\r\n        {\r\n            \"@iot.id\": 5\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://frost-server.anthonydera.com/FROST-Server/v1.1/Locations",
+					"protocol": "https",
+					"host": [
+						"frost-server",
+						"anthonydera",
+						"com"
+					],
+					"path": [
+						"FROST-Server",
+						"v1.1",
+						"Locations"
+					]
+				},
+				"description": "# Request Payload description\nThe JSON object that is sent to the 'Locations' record consists of the following fields:\n\n|   Field       |                            Data source                      |\n| ------------- | ----------------------------------------------------------- |\n| name          | Use the *name* field of the SubSite-Table-Schema            |\n| description   | Use the *todo_geo_fence* field of the SubSite-Table-Schema  |\n| properties    | Insert the SubSite-Table-Schema & Site-Table-Schema objects |\n| encodingType  | *\"application/geo+json\"*                                    |\n| location      | {\"type\": \"Point\", \"coordinates\":  [*long value, lat value*] |\n| Things        | [{ \"@iot.id\": *ID value of the Thing enitity*}]             |\n\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n**NOTE:** Also included with the response is the ID of the newly created entity in the 'Things' table. To maintain data integrity, it is important that this ID number  is appended to the URL during subsequent POSTing of dependent entitities such as SENSOR and SAMPLE data that are associated with the DEVICE.\n\n# Error Codes\n| Response Code |                  Cause                  |\n| ------------- | --------------------------------------- |\n|     200       | Request was processed successfully      | \n|     401       | Unauthorized. Token was rejected        |\n|     400       | Bad Request. Incorrect JSON data sent   |"
+			},
+			"response": []
+		},
+		{
+			"name": "Service Layer command to Get a list of locations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/Locations",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"Locations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Service Layer command to Get  location details for location id = 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/Locations(3)",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"Locations(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Service Layer command to Get  location details for location id = 1 Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/Locations(3)",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"Locations(3)"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

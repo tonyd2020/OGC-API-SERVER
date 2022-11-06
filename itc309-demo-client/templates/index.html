@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <h1 class="display-4" style="margin:auto;">ITC309 Team6 Demo</h1>
+            </div>
+            <div class="row">
+                <p class="lead" style="margin:auto; margin-bottom: 2rem;">A Demonstration tool for use with our
+                    FROST-Server</p>
+            </div>
+            {% if url_set: %}
+            <nav class="navbar sticky-top flex-lg-row navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav navbar-nav justify-content-between w-100">
+                        <li class="nav-item"><a href="{{url_for('home')}}">Home</a></li>
+                        <li class="nav-item"><a href="{{url_for('get_Things')}}">Things</a></li>
+                        <li class="nav-item"><a href="{{url_for('get_Locations')}}">Locations</a></li>
+                        <li class="nav-item"><a href="{{url_for('get_Sensors')}}">Sensors</a></li>
+                        <li class="nav-item"><a href="{{url_for('get_ObservedProperties')}}">Observed Properties</a>
+                        </li>
+                        <li class="nav-item"><a href="{{url_for('get_Datastreams')}}">Datastreams</a></li>
+                    </ul>
+                </div>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% block content %}
+        <form method="post">
+            <div class="form-group">
+                <label for="url">Enter the FROST Server's URL</label>
+                <input type="text" id="url" name="url" placeholder="FROST or API Gateway Server URL"
+                       size="50"
+                       class="form-control"
+                       value="{{ request.form['url'] }}" required>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="url_option" id="aws" value="aws"> AWS API Gateway
+                <input type="radio" name="url_option" id="frost" value="frost" checked> FROST Server
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" name="username" id="username"
+                       placeholder="client's username"
+                       class="form-control"
+                       value="{{ request.form['username'] }}" required>
+            </div>
+            <div class="form-group"><label for="password">Password</label>
+                <input type="text" name="password" id="password"
+                       placeholder="client's password" class="form-control"
+                       value="{{ request.form['password'] }}" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+        {% endblock %}
+    </div>
+</div>
+
+{% include "plugins.html" %}
+</body>
+{% include "footer.html" %}
+</html>

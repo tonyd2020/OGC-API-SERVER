@@ -1,0 +1,55 @@
+div.container {
+
+}
+#lineChart{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.ogc-table{
+    left: 50%;
+    margin-right: -50%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+}
+
+
+table.obs-table-heading-col-normal {
+    width: 200px;
+    padding: 5px;
+    text-align: center
+}
+
+table.obs-table-data-col-normal {
+    width: 200px;
+    padding: 5px;
+    text-align: center
+}
+
+.obs-table-heading-col-params {
+    width: 550px;
+    padding: 5px;
+    text-align: center
+}
+
+.obs-table-data-col-params {
+    width: 550px;
+    padding: 5px;
+    text-align: left;
+}
+
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+
+row h1.table-title (
+color: blue;
+padding-top: 20px;
+padding-bottom: 20px;
+}

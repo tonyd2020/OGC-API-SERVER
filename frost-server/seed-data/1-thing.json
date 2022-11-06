@@ -1,0 +1,8 @@
+{
+  "name" : "My Kitchen",
+  "description" : "The kitchen in my house",
+  "properties" : {
+    "oven" : true,
+    "heatingPlates" : 4
+  }
+}

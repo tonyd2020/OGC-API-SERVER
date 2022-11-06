@@ -1,0 +1,7 @@
+{
+  "name": "HDT22",
+  "description": "A cheap sensor that measures Temperature and Humidity",
+  "properties": {},
+  "encodingType": "application/pdf",
+  "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf"
+}

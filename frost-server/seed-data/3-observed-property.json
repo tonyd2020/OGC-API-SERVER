@@ -1,0 +1,6 @@
+{
+  "name": "Temperature",
+  "description": "Temperature",
+  "properties": {},
+  "definition": "http://dd.eionet.europa.eu/vocabularyconcept/aq/meteoparameter/54"
+}

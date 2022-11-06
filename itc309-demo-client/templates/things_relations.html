@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<div class="container">
+    {% include "navbar.html" %}
+    <div class="container">
+        {% if locations: %}
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Locations related to Thing ID {{id}}</h3>
+                <table class="table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width: 180px;">ID</th>
+                        <th style="width: 180px;">Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in locations %}
+                    <tr>
+                        <td style="width: 180px;">{{row["@iot.id"]}}</td>
+                        <td style="width: 180px;">{{row["name"]}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                {% if datastreams: %}
+
+                <h3>Datastreams related to Thing ID {{id}}</h3>
+                <table class="table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width: 180px;">ID</th>
+                        <th style="width: 180px;">Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in datastreams %}
+                    <tr>
+                        <td style="width: 180px;"><a href="{{url_for('get_Datastream', id=row['@iot.id'])}}">{{row["@iot.id"]}}</a></td>
+                        <td style="width: 180px;">{{row["@iot.id"]}}</td>
+                        <td style="width: 180px;">{{row["name"]}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    {% include "plugins.html" %}
+</body>
+</html>

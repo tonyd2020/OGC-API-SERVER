@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <!--  <link rel="manifest" href="site.webmanifest">-->
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <meta name="theme-color" content="#fafafa">
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>ITC309 Team6 Demo</h1>
+        <p>A Demonstration tool for use with our FROST-Server</p>
+        <nav class="navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('get_Things')}}">Things</a></li>
+                    <li><a href="{{url_for('get_Locations')}}">Locations</a></li>
+                    <li><a href="{{url_for('get_Sensors')}}">Sensors</a></li>
+                    <li><a href="{{url_for('get_ObservedProperties')}}">Observed Properties</a></li>
+                    <li><a href="{{url_for('get_Datastreams')}}">Datastreams</a></li>
+                    <li><a href="{{url_for('get_FeaturesOfInterest')}}">Features Of Interest</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <h1>No Observations Found. Back to the <a href="{{url_for('home')}}">Home Page</a></h1>
+    </div>
+</div>
+
+</body>
+</html>

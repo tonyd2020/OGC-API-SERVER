@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "15046b11-1ad3-48af-99ee-ecdee26c0978",
+		"name": "3 POST to Sensor.postman_collection",
+		"description": "# Introduction\nThis is a description of the IoT Layer process that is used to translate the data from the PairTree Data model to the OGC/STA data model.\n\n\n# Overview\nThe conversion process is as follows:\n(IoT Layer command to AWS API GW) => (AWS Lambda request) => (FROST-Server responds)\n\n# Authentication\n**IoT Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'admin' level access).\n\n**Service Layer operations:** Use Authentication Bearer at the AWS API Gateway and basic authentication at the FROST-Server (requires 'read' level access).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Original PairTree Data received by the AWS Gateway",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"OemSensor-Table-Schema\": {\r\n        \"name\": \"Tony Test\",\r\n        \"description\": \"Tony Test 14 Sep\",\r\n        \"id\": 100\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{API_Gateway}}/Sensors",
+					"host": [
+						"{{API_Gateway}}"
+					],
+					"path": [
+						"Sensors"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Original PairTree Data received by the AWS Gateway",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"OemSensor-Table-Schema\": {\r\n        \"name\": \"NE corner temp sensor\",\r\n        \"id\": 1\r\n    },\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://istiykwmyf.execute-api.ap-southeast-2.amazonaws.com/dev/ingest-data",
+							"protocol": "https",
+							"host": [
+								"istiykwmyf",
+								"execute-api",
+								"ap-southeast-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"ingest-data"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Transformed Data received by the FROST Server",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"NE corner temp sensor (from OemSensor-Table-Schema)\",\r\n  \"description\": \"A cheap sensor that measures Temperature and Humidity\",\r\n  \"properties\": {\r\n      \"OemSensor-Table-Schema\": {\r\n          \"name\": \"NE corner temp sensor\",\r\n          \"id\": 1\r\n      }\r\n  },\r\n  \"encodingType\": \"application/pdf\",\r\n  \"metadata\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/FROST-Server/v1.1/Sensors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FROST-Server",
+						"v1.1",
+						"Sensors"
+					]
+				},
+				"description": "# Request description\nThe JSON object that is sent to the 'Locations' record consists of the following fields:\n\n|   Field       |                            Data source                      |\n| ------------- | ----------------------------------------------------------- |\n| name          | Use the *name* field of the OemSensor-Table-Schema          |\n| description   | Use the *name* field of the OemSensor-Table-Schema          |\n| properties    | Insert the OemDevice-Table-Schema & Site-Table-Schema object|\n| encodingType  | *\"application/pdf\"*                                         |\n| metadata      | \"https://\"                                                  |\n\n\n# Response description\nIf the request is successful the FROST-Server returns a response code of **201**. \n**NOTE:** Also included with the response is the ID of the newly created entity in the 'Sensor' table. To maintain data integrity, it is important that this ID number  is appended to the URL during subsequent POSTing of dependent entitities such as Datastream and Observation data that are associated with the DEVICE.\n\n\n# Error Codes\n| Response Code |                  Cause                  |\n| ------------- | --------------------------------------- |\n|     200       | Request was processed successfully      | \n|     401       | Unauthorized. Token was rejected        |\n|     400       | Bad Request. Incorrect JSON data sent   |"
+			},
+			"response": []
+		},
+		{
+			"name": "Getting a list of Sensors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "456456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_Gateway_GET}}/v1.0/Sensors",
+					"host": [
+						"{{API_Gateway_GET}}"
+					],
+					"path": [
+						"v1.0",
+						"Sensors"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

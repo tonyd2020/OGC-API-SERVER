@@ -1,0 +1,13 @@
+{
+  "name": "Location of my kitchen",
+  "description": "This is where my kitchen is",
+  "properties": {},
+  "encodingType": "application/geo+json",
+  "location": {
+    "type": "Point",
+    "coordinates": [8.10, 50.00]
+  },
+  "Things": [
+    { "@iot.id": 1}
+  ]
+}

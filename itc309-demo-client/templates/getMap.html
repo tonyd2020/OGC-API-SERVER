@@ -1,0 +1,27 @@
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        // The location of Coordinates
+        const coord = {  lat: {{lat}}, lng: {{lon}} };
+        // The map, centered at Coordinates
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 15,
+          center: coord,
+        });
+        // The marker, positioned at Coordinates
+        const marker = new google.maps.Marker({
+          position: coord,
+          map: map,
+        });
+      }
+    </script>
+
+
+    <h3 style="padding-bottom: 10px;">Location in Map</h3>
+    <!--The div element for the map -->
+    <div id="map">
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXIv60ZJJkKYo08Rkvop_OS_GcpYvlPjg&callback=initMap&libraries=&v=weekly" async>
+      </script>
+    </div>

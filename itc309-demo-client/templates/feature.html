@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<div class="container">
+    {% include "navbar.html" %}
+</div>
+<div class="container">
+    <div class="row table-title" style="padding-bottom: 20px;">
+        <h1 style="margin:auto;">Feature of Interest for Observation ID: {{id}}</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <table class="table-striped">
+            <thead>
+            <tr>
+                {% for key,value in data | dictsort %}
+                {% if key.title() == 'Feature' %}
+                <th style="width: 400px;">{{key.title()}}</th>
+                {% else %}
+                <th style="width: 180px;">{{key.title()}}</th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for key,value in data | dictsort %}
+                {% if key.title() == 'Feature' %}
+                <td style="width: 400px;">{{value}}</td>
+                {% else %}
+                <td style="width: 180px;">{{value}}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include "plugins.html" %}
+</body>
+
+</html>

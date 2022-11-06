@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+{% include "header.html" %}
+
+<body>
+<div class="container">
+    {% include "navbar.html" %}
+</div>
+<div class="container">
+        <div class="row table-title" style="padding-bottom: 20px; margin:auto;">
+        <h1 style="margin:auto;">Summary of OGC/STA objects in the Database</h1>
+    </div>
+    <div class="row">
+        {% if table_rows != []: %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 180px;">OGC/STA</th>
+                <th style="width: 120px;">Instance Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in table_rows %}
+            <tr>
+                {% for key,value in row.items() %}
+                {% if key.title() != 'Observations' %}
+                <td style="width: 180px;">
+                    <a href="{{url_for('get_'+ key)}}">{{key}}</a>
+                </td>
+                <td style="width: 120px;">{{value}}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+
+    {% include "plugins.html" %}
+</body>
+{% include "footer.html" %}
+</html>

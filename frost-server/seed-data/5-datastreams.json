@@ -1,0 +1,13 @@
+{
+  "name" : "Temperature in the Kitchen",
+  "description" : "The temperature in the kitchen, measured by the sensor next to the window",
+  "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+  "unitOfMeasurement": {
+    "name": "Degree Celsius",
+    "symbol": "°C",
+    "definition": "ucum:Cel"
+  },
+  "Thing": {"@iot.id": 999},
+  "Sensor": {"@iot.id": 999},
+  "ObservedProperty": {"@iot.id": 999}
+}
